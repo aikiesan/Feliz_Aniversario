@@ -23,7 +23,7 @@
     <section class="container heroi" aria-labelledby="titulo">
       <div class="heroi-cabeca">
         <h1 id="titulo">Um reator para o seu aniversário</h1>
-        <p id="instrucao" class="lede">Estoure as bolhas de metano e acenda a vela do bolo.</p>
+        <p id="instrucao" class="lede">Alimente o reator, estoure as bolhas e acenda a vela.</p>
       </div>
 
       <figure class="planta" id="planta">
@@ -93,7 +93,7 @@
               <line x1="276" y1="292" x2="308" y2="292" class="traco fino"/>
               <text x="292" y="288" class="sigla" text-anchor="middle">TI</text>
               <text x="292" y="303" class="sigla" text-anchor="middle">104</text>
-              <text id="t-temp" x="314" y="297" class="valor num">24 °C</text>
+              <text id="t-temp" x="314" y="297" class="valor num">37 °C</text>
             </g>
             <g class="sensor">
               <line x1="260" y1="346" x2="276" y2="346" class="traco"/>
@@ -151,33 +151,10 @@
       </figure>
 
       <div class="acoes">
-        <div class="painel" id="painel" aria-label="Painel de operação do reator">
-          <div class="medida">
-            <p class="medida-nome">Temperatura</p>
-            <p class="medida-valor num"><span id="v-temp">24</span> °C</p>
-            <div class="faixa" style="--ini: 0.375; --fim: 0.5"><span class="faixa-ok"></span><span class="faixa-marca" id="m-temp"></span></div>
-            <div class="passo">
-              <button class="btn-passo" type="button" data-passo="-2" aria-label="Diminuir a temperatura">&minus;</button>
-              <span class="passo-alvo num">alvo <span id="v-alvo">24</span> °C</span>
-              <button class="btn-passo" type="button" data-passo="2" aria-label="Aumentar a temperatura">+</button>
-            </div>
-          </div>
-          <div class="medida">
-            <p class="medida-nome">Carga orgânica</p>
-            <p class="medida-valor num"><span id="v-carga">0,0</span> <span class="unidade">kg SV/m³·d</span></p>
-            <div class="faixa" style="--ini: 0.25; --fim: 0.5625"><span class="faixa-ok"></span><span class="faixa-marca" id="m-carga"></span></div>
-            <button id="btn-alimentar" class="btn-sec" type="button">Alimentar</button>
-          </div>
-          <div class="medida">
-            <p class="medida-nome">pH</p>
-            <p class="medida-valor num" id="v-ph">7,2</p>
-            <div class="faixa" style="--ini: 0.5; --fim: 0.85"><span class="faixa-ok"></span><span class="faixa-marca" id="m-ph"></span></div>
-            <p class="medida-nota">ideal entre 6,8 e 7,5</p>
-          </div>
-        </div>
         <p class="status" id="status" aria-live="polite"></p>
         <div class="linha-acao">
-          <button id="btn-acao" class="btn" type="button" hidden>Abrir a válvula V-102</button>
+          <button id="btn-alimentar" class="btn" type="button">Alimentar o reator</button>
+          <button id="btn-acao" class="btn" type="button" hidden>Assoprar a vela</button>
           <div class="tubos" id="tubos" aria-hidden="true"></div>
         </div>
       </div>

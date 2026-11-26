@@ -14,7 +14,6 @@
   const planta = $("#planta"), cena = $("#cena"), camada = $("#bolhas");
   const titulo = $("#titulo"), instrucao = $("#instrucao"), statusEl = $("#status");
   const btnAcao = $("#btn-acao"), btnSom = $("#btn-som"), btnAlimentar = $("#btn-alimentar");
-  const botoesPasso = [...document.querySelectorAll(".btn-passo")];
   const contador = $("#contador"), ponteiro = $("#ponteiro"), rotulo = $("#rotulo");
   const tubosEl = $("#tubos");
   const amostras = [...document.querySelectorAll("#amostras .amostra")];
@@ -23,7 +22,7 @@
   const capCor = (i) => token(caps[i].replace(/^var\((.+)\)$/, "$1"));
 
   // ---------------- estado ----------------
-  const sim = { T: 24, alvo: 24, carga: 0, pH: 7.2, P: 0, taxa: 0 };
+  const sim = { carga: 0, P: 0, taxa: 0 };
   let fase = "parado"; // parado → coleta → cheio → aceso → assoprado
   const coletadas = new Set();
   let somLigado = true;
@@ -104,66 +103,26 @@
   }
 
   // ---------------- modelo do processo ----------------
-  // temperatura: mesofílica 35 a 40 °C, termofílica 50 a 57 °C
-  function fT(T) {
-    if (T < 20) return 0;
-    if (T < 30) return 0.04 * (T - 20);
-    if (T < 35) return 0.4 + 0.12 * (T - 30);
-    if (T <= 40) return 1;
-    if (T < 45) return 1 - 0.14 * (T - 40);
-    if (T < 50) return 0.3 + 0.12 * (T - 45);
-    if (T <= 57) return 0.9;
-    return Math.max(0.1, 0.9 - 0.2 * (T - 57));
-  }
-  // carga orgânica (kg SV/m³·d): ideal de 2 a 4,5
-  function fC(c) {
-    if (c < 0.4) return 0.05;
-    if (c < 2) return 0.3 + 0.44 * (c - 0.4);
-    if (c <= 4.5) return 1;
-    return Math.max(0.4, 1 - 0.15 * (c - 4.5));
-  }
-  // pH: ideal de 6,8 a 7,5
-  function fPH(p) {
-    if (p >= 6.8) return 1;
-    if (p >= 6.4) return 0.2 + 2 * (p - 6.4);
-    return 0.03;
-  }
-
+  // reator mesofílico a 37 °C: com carga, as arqueias produzem; sem carga, a produção cai
   function passoSim(dt) {
-    sim.T += (sim.alvo - sim.T) * (1 - Math.exp(-dt / 3.5));
-    sim.carga *= Math.exp(-dt / 16);
-    const alvoPH = 7.25 - Math.max(0, sim.carga - 4.5) * 0.45;
-    sim.pH += (alvoPH - sim.pH) * (1 - Math.exp(-dt / 4));
-    sim.pH = clamp(sim.pH, 5.8, 7.6);
-    sim.taxa = fT(sim.T) * fC(sim.carga) * fPH(sim.pH);
+    sim.carga *= Math.exp(-dt / 30);
+    sim.taxa = sim.carga > 0.3 ? 1 : 0;
     const alvoP = (coletadas.size / total) * 4.5;
     sim.P += (alvoP - sim.P) * (1 - Math.exp(-dt / 0.6));
   }
 
   // ---------------- leituras ----------------
-  const marcas = { temp: $("#m-temp"), carga: $("#m-carga"), ph: $("#m-ph") };
-  const medidas = { temp: marcas.temp.closest(".medida"), carga: marcas.carga.closest(".medida"), ph: marcas.ph.closest(".medida") };
-  function marcar(el, frac) { el.style.setProperty("--pos", `${clamp(frac, 0, 1) * el.parentElement.clientWidth}px`); }
-
   let ultimoStatus = "";
   function dizer(html) {
     if (html === ultimoStatus) return;
     ultimoStatus = html;
     statusEl.innerHTML = html;
   }
-
+  let alimentado = false;
   function diagnostico() {
-    const T = Math.round(sim.T), prod = `<strong>Produção ${Math.round(sim.taxa * 100)}%.</strong> `;
-    if (fase === "cheio") return `<strong>Gasômetro cheio, ${fmt(sim.P)} mbar.</strong> Abra a válvula para acender a vela.`;
-    if (sim.pH < 6.6) return `${prod}Acidificação: os ácidos graxos voláteis acumularam e o pH caiu para ${fmt(sim.pH)}. Pare de alimentar e espere o reator se recuperar.`;
-    if (T < 30) return `${prod}Reator frio, ${T} °C. As arqueias metanogênicas mesofílicas preferem de 35 a 40 °C: suba o aquecimento.`;
-    if (T < 35) return `${prod}Esquentando. Falta pouco para a faixa mesofílica, de 35 a 40 °C.`;
-    if (T > 57) return `${prod}Quente demais: acima de 57 °C até as termofílicas reclamam.`;
-    if (T > 40 && T < 50) return `${prod}Entre as faixas mesofílica e termofílica a comunidade microbiana sofre. Volte para 35 a 40 °C ou suba para 50 a 57 °C.`;
-    if (sim.carga < 1) return `${prod}Os microrganismos estão com fome: alimente o reator.`;
-    if (sim.carga > 4.5) return `${prod}Carga orgânica alta. Mais comida agora pode azedar o reator.`;
-    if (T >= 50) return `${prod}Regime termofílico: produz bem, mas gasta mais energia para aquecer. Estoure as bolhas de CH₄.`;
-    return `${prod}Processo estável, metanogênese a todo vapor. Estoure as bolhas de CH₄.`;
+    if (!alimentado) return "O reator está com fome. Alimente para começar a produzir biogás.";
+    if (sim.taxa === 0) return "A produção caiu: alimente o reator de novo.";
+    return "Metanogênese a todo vapor. Toque nas bolhas de CH₄ para ler as mensagens.";
   }
 
   let acumLeitura = 0;
@@ -171,47 +130,22 @@
     acumLeitura += dt;
     if (!forcar && acumLeitura < 0.15) return;
     acumLeitura = 0;
-    $("#v-temp").textContent = Math.round(sim.T);
-    $("#v-alvo").textContent = sim.alvo;
-    $("#v-carga").textContent = fmt(sim.carga);
-    $("#v-ph").textContent = fmt(sim.pH);
-    $("#t-temp").textContent = `${Math.round(sim.T)} °C`;
-    $("#t-ph").textContent = `pH ${fmt(sim.pH)}`;
     $("#t-pressao").textContent = `${fmt(sim.P)} mbar`;
-    marcar(marcas.temp, (sim.T - 20) / 40);
-    marcar(marcas.carga, sim.carga / 8);
-    marcar(marcas.ph, (sim.pH - 5.8) / 2);
-    medidas.temp.classList.toggle("alerta", fase !== "parado" && fT(sim.T) < 0.6);
-    medidas.carga.classList.toggle("alerta", fase !== "parado" && (sim.carga > 4.5 || sim.carga < 1));
-    medidas.ph.classList.toggle("alerta", sim.pH < 6.8);
     ponteiro.style.transform = `rotate(${-60 + (sim.P / 4.5) * 120}deg)`;
-    const calor = clamp((sim.T - 24) / 16, 0, 1);
-    $("#serpentina").style.setProperty("--cor-aquec", `color-mix(in oklab, var(--color-accent) ${Math.round(calor * 100)}%, var(--color-cold))`);
-    $("#acidez").style.setProperty("--acidez", clamp((7.0 - sim.pH) / 0.8, 0, 0.6).toFixed(2));
     $("#nivel").style.setProperty("--nivel", `${(-sim.carga * 3).toFixed(1)}px`);
     contador.textContent = `${coletadas.size} de ${total}`;
-    if (fase === "coleta" || fase === "cheio") dizer(diagnostico());
+    if (fase === "coleta") dizer(diagnostico());
   }
 
   // ---------------- controles ----------------
-  function habilitarControles(on) {
-    btnAlimentar.disabled = !on;
-    botoesPasso.forEach((b) => (b.disabled = !on));
-  }
-  habilitarControles(false);
-
-  botoesPasso.forEach((b) => b.addEventListener("click", () => {
-    sim.alvo = clamp(sim.alvo + Number(b.dataset.passo), 20, 60);
-    tom(sim.alvo * 14, sim.alvo * 15, 0.05, 0.08, "triangle");
-    vibrar(6);
-    atualizarLeituras(0, true);
-  }));
+  $("#serpentina").style.setProperty("--cor-aquec", "var(--color-accent)");
 
   const substratos = ["+ vinhaça", "+ torta de filtro", "+ dejetos suínos", "+ resíduo de alimentos", "+ glicerina", "+ farelo de bolo"];
   let nSub = 0;
   btnAlimentar.addEventListener("click", () => {
     if (fase !== "coleta") return;
-    sim.carga = Math.min(9, sim.carga + 1.1);
+    sim.carga = Math.min(6, sim.carga + 2);
+    alimentado = true;
     glug(); vibrar(10);
     if (!reduzido) {
       $("#bomba").animate([{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }], { duration: 700, easing: EASE });
@@ -416,46 +350,39 @@
   function ligar() {
     fase = "coleta";
     btnAcao.hidden = true;
-    habilitarControles(true);
-    instrucao.textContent = "Aqueça, alimente e mantenha o pH. Cada bolha de CH₄ traz uma amostra.";
     medir();
     atualizarLeituras(0, true);
   }
 
   function cheio() {
     fase = "cheio";
-    habilitarControles(false);
+    btnAlimentar.hidden = true;
     bolhas.forEach((b) => b.el.remove());
     bolhas.length = 0;
     atualizarLeituras(0, true);
-    btnAcao.textContent = "Abrir a válvula V-102";
-    btnAcao.hidden = false;
-    btnAcao.focus({ preventScroll: true });
     ondaTubos();
-    vibrar([10, 40, 10]);
+    acender();
   }
 
   function acender() {
     fase = "aceso";
-    btnAcao.disabled = true;
     $("#valvula").classList.add("aberta");
     $("#fluxo").classList.add("ligado");
     sopro(1.2, 1800, 0.1);
-    dizer("Biometano a caminho do queimador.");
+    dizer("Gasômetro cheio. Biometano a caminho da vela.");
     setTimeout(() => {
       sopro(0.35, 600, 0.45);
       $("#chama").classList.add("acesa");
       if (!reduzido) $("#chama-corpo").animate([{ transform: "scale(0.1)" }, { transform: "scale(1.3)", offset: 0.55 }, { transform: "scale(1)" }], { duration: 700, easing: "ease-out" });
       trocarTitulo("Feliz aniversário, Renata!");
-      instrucao.textContent = "Vela acesa com biometano. Faça um pedido e toque na chama para assoprar.";
+      instrucao.textContent = "Vela acesa com biometano. Faça um pedido e assopre.";
       if (ehCelular()) $(".heroi").scrollIntoView({ behavior: reduzido ? "auto" : "smooth", block: "start" });
       dizer("Combustão estável. Chama azul na base, como manda o figurino.");
       fanfarra(); vibrar([20, 60, 20, 60, 40]);
       confeteDe("chama", 160); confeteDe("cantos", 140);
       ondaTubos();
       $("#laudo").classList.add("revelado");
-      btnAcao.textContent = "Assoprar a vela";
-      btnAcao.disabled = false;
+      btnAcao.hidden = false;
       btnAcao.focus({ preventScroll: true });
     }, reduzido ? 200 : 1400);
   }
@@ -470,16 +397,14 @@
     confeteDe("cantos", 220);
     ondaTubos();
     instrucao.textContent = "Pedido registrado no caderno de laboratório. Que se realize com rendimento máximo.";
-    dizer("Reator em repouso. Bom trabalho, operadora.");
-    btnAcao.textContent = "Ler o laudo final";
+    dizer("Fim. Obrigado por operar o reator.");
+    btnAcao.hidden = true;
   }
 
   $("#chama").addEventListener("click", () => { if (fase === "aceso") assoprar(); });
 
   btnAcao.addEventListener("click", () => {
-    if (fase === "cheio") acender();
-    else if (fase === "aceso") assoprar();
-    else if (fase === "assoprado") $("#laudo").scrollIntoView({ behavior: reduzido ? "auto" : "smooth", block: "center" });
+    if (fase === "aceso") assoprar();
   });
 
   // ---------------- confete ----------------
