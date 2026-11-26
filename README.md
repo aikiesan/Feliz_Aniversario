@@ -14,6 +14,6 @@ Sem JavaScript a página mostra todas as mensagens e a vela acesa.
 - `tokens.css`: paleta e tipografia (papel de engenharia, tinta azul-petróleo, a chama como único ponto quente)
 - `base.css` e `style.css`: estilos, conferidos com o linter do [Hallmark](https://github.com/Nutlope/hallmark) e a lista do [unslop](https://github.com/heydamir/unslop) (CC BY 4.0, Damir Sokolovsky)
 - `script.js`: bolhas, rótulos, som sintetizado (Web Audio) e confete
-- `.github/workflows/pages.yml`: deploy automático no GitHub Pages a cada push na `main`
+- deploy: GitHub Pages direto da branch `main` (raiz); `.nojekyll` evita o processamento pelo Jekyll
 
 Sem dependências nem etapa de build. Para testar localmente: `python -m http.server` e abrir `http://localhost:8000`.
