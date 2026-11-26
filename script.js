@@ -415,13 +415,11 @@
   // ---------------- fases ----------------
   function ligar() {
     fase = "coleta";
-    audio();
     btnAcao.hidden = true;
     habilitarControles(true);
     instrucao.textContent = "Aqueça, alimente e mantenha o pH. Cada bolha de CH₄ traz uma amostra.";
     medir();
     atualizarLeituras(0, true);
-    if (ehCelular()) planta.scrollIntoView({ behavior: reduzido ? "auto" : "smooth", block: "start" });
   }
 
   function cheio() {
@@ -479,8 +477,7 @@
   $("#chama").addEventListener("click", () => { if (fase === "aceso") assoprar(); });
 
   btnAcao.addEventListener("click", () => {
-    if (fase === "parado") ligar();
-    else if (fase === "cheio") acender();
+    if (fase === "cheio") acender();
     else if (fase === "aceso") assoprar();
     else if (fase === "assoprado") $("#laudo").scrollIntoView({ behavior: reduzido ? "auto" : "smooth", block: "center" });
   });
@@ -553,6 +550,6 @@
   }
 
   medir();
-  atualizarLeituras(0, true);
+  ligar(); // o reator já começa em operação
   requestAnimationFrame(quadro);
 })();
