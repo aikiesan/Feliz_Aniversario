@@ -277,10 +277,25 @@
 
   function abrirRotulo(i) {
     const li = amostras[i];
-    rotulo.style.setProperty("--cap", caps[i]);
-    $("#rotulo-tag").textContent = li.querySelector(".amostra-tag").textContent.trim();
-    $("#rotulo-titulo").textContent = li.querySelector("h3").textContent;
-    $("#rotulo-texto").textContent = li.querySelector("p:not(.amostra-tag)").textContent;
+    mostrarRotulo({
+      cap: caps[i],
+      tag: li.querySelector(".amostra-tag").textContent.trim(),
+      titulo: li.querySelector("h3").textContent,
+      texto: li.querySelector("p:not(.amostra-tag)").textContent,
+      botao: "Guardar no rack"
+    });
+  }
+
+  function mostrarRotulo(d) {
+    rotulo.style.setProperty("--cap", d.cap);
+    $("#rotulo-tag").textContent = d.tag;
+    $("#rotulo-titulo").textContent = d.titulo;
+    $("#rotulo-texto").textContent = d.texto;
+    const ass = $("#rotulo-assinatura");
+    ass.textContent = d.assinatura || "";
+    ass.hidden = !d.assinatura;
+    $("#rotulo-guardar").textContent = d.botao;
+    rotulo.classList.toggle("final", !!d.final);
     rotulo.style.transform = "";
     rotulo.showModal();
     $("#rotulo-guardar").focus({ preventScroll: true });
@@ -399,6 +414,19 @@
     instrucao.textContent = "Pedido registrado no caderno de laboratório. Que se realize com rendimento máximo.";
     dizer("Fim. Obrigado por operar o reator.");
     btnAcao.hidden = true;
+    const laudo = $("#laudo");
+    setTimeout(() => {
+      mostrarRotulo({
+        cap: "var(--color-accent)",
+        tag: "Laudo final",
+        titulo: laudo.querySelector("h3").textContent,
+        texto: laudo.querySelector("p:not(.assinatura)").textContent,
+        assinatura: laudo.querySelector(".assinatura").textContent,
+        botao: "Fechar",
+        final: true
+      });
+      confeteDe("chama", 120);
+    }, reduzido ? 0 : 1100);
   }
 
   $("#chama").addEventListener("click", () => { if (fase === "aceso") assoprar(); });

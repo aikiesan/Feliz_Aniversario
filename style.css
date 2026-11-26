@@ -3,8 +3,8 @@
  * axes: green-tint paper/grotesque/flame orange · posture: categorical cap colours, one per sample, carry identity; the flame stays the only warm accent until lit · contrast: pass · fold: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P5 H4 E4 S5 R3 V5 · weakest: R, the operating panel adds words and controls; kept it to three readings and two controls, all of them real process variables */
 /* Hallmark · waive 80 · drawn illustration · the flowsheet is the joke and the signature: a cake treated as plant equipment; no photograph can carry it */
-@import url("./tokens.css?v=202611261147");
-@import url("./base.css?v=202611261147");
+@import url("./tokens.css?v=202611261149");
+@import url("./base.css?v=202611261149");
 
 /* ---------- página ---------- */
 body {
@@ -241,6 +241,8 @@ h2 { font-size: var(--text-section); font-weight: 500; letter-spacing: var(--tra
 .rotulo::backdrop { background: var(--color-scrim); }
 .rotulo .btn { width: 100%; margin-top: var(--space-xs); }
 .rotulo .amostra-tag { font-size: var(--text-2xl); }
+.rotulo.final h3 { font-size: var(--text-2xl); }
+.rotulo.final p:not(.amostra-tag):not(.assinatura) { font-size: var(--text-lead); }
 .alca { display: none; }
 
 .rodape { padding-block: var(--space-xl); border-top: var(--rule-hair) solid var(--color-rule); color: var(--color-muted); font-size: var(--text-sm); }
