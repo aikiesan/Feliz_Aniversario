@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feliz aniversário, Renata</title>
+  <meta name="description" content="Um biodigestor de aniversário para a professora Renata Piacentini Rodriguez: estoure as bolhas de metano e acenda a vela do bolo.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600&family=Bricolage+Grotesque:opsz,wght@12..96,500&family=Caveat:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+  <header class="container topo">
+    <p class="para">Para a professora Renata Piacentini Rodriguez</p>
+    <button id="btn-som" class="btn-texto" type="button" aria-pressed="true">Som ligado</button>
+  </header>
+
+  <main>
+    <section class="container heroi" aria-labelledby="titulo">
+      <div class="heroi-texto">
+        <h1 id="titulo">Um reator para o seu aniversário</h1>
+        <p id="instrucao" class="lede">Estoure as bolhas de metano e acenda a vela do bolo.</p>
+        <div class="acoes">
+          <button id="btn-acao" class="btn" type="button">Ligar o reator</button>
+          <p id="leitura" class="leitura num" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <figure class="planta" id="planta">
+        <svg id="cena" viewBox="0 0 640 470" role="img" aria-labelledby="cena-titulo">
+          <title id="cena-titulo">Fluxograma: o biodigestor R-101 envia biometano pela válvula V-102 até o queimador da vela do bolo B-201</title>
+          <defs>
+            <pattern id="hachura" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="8" class="hachura-linha"/>
+            </pattern>
+            <clipPath id="interior"><rect x="62" y="202" width="196" height="196"/></clipPath>
+          </defs>
+
+          <!-- linha de gás -->
+          <path class="linha" d="M160 138 V70 H578 V226 H530"/>
+          <path id="fluxo" class="fluxo" d="M160 138 V70 H578 V226 H530"/>
+          <path class="seta" d="M300 64 l8 6 l-8 6"/>
+          <path class="seta" d="M572 150 l6 8 l6 -8"/>
+
+          <!-- manômetro PI-103 -->
+          <g class="instrumento">
+            <line x1="228" y1="70" x2="228" y2="52" class="traco"/>
+            <circle cx="228" cy="34" r="18" class="corpo"/>
+            <path d="M216 40 A13 13 0 1 1 240 40" class="escala"/>
+            <line id="ponteiro" x1="228" y1="34" x2="228" y2="22" class="ponteiro"/>
+            <text x="252" y="30" class="tag">PI-103</text>
+            <text x="252" y="48" class="nota">gasômetro</text>
+          </g>
+
+          <!-- válvula V-102 -->
+          <g id="valvula" class="valvula">
+            <path d="M372 58 L372 82 L396 70 Z M420 58 L420 82 L396 70 Z" class="corpo-valvula"/>
+            <line x1="396" y1="70" x2="396" y2="48" class="traco"/>
+            <line x1="386" y1="48" x2="406" y2="48" class="traco"/>
+            <text x="396" y="104" class="tag" text-anchor="middle">V-102</text>
+          </g>
+
+          <!-- biodigestor R-101 -->
+          <g>
+            <path d="M60 200 A100 62 0 0 1 260 200" class="cupula"/>
+            <rect x="152" y="132" width="16" height="10" class="corpo"/>
+            <rect x="60" y="200" width="200" height="200" class="corpo"/>
+            <g clip-path="url(#interior)">
+              <path id="substrato" d="M60 262 q25 -8 50 0 t50 0 t50 0 t50 0 V400 H60 Z" class="substrato"/>
+              <path d="M60 262 q25 -8 50 0 t50 0 t50 0 t50 0" class="superficie"/>
+            </g>
+            <rect id="area-bolhas" x="72" y="270" width="176" height="122" class="area"/>
+            <line x1="40" y1="400" x2="600" y2="400" class="chao"/>
+            <text x="60" y="428" class="tag">R-101</text>
+            <text x="60" y="450" class="nota">biodigestor<tspan class="nota-longa">, codigestão de afeto e ciência</tspan></text>
+          </g>
+
+          <!-- bolo B-201 -->
+          <g>
+            <rect x="398" y="340" width="144" height="60" class="corpo bolo"/>
+            <rect x="420" y="292" width="100" height="48" class="corpo bolo"/>
+            <path d="M398 352 q9 10 18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0" class="cobertura"/>
+            <path d="M420 302 q10 9 20 0 t20 0 t20 0 t20 0 t20 0" class="cobertura"/>
+            <rect x="464" y="236" width="12" height="56" class="corpo vela"/>
+            <line x1="470" y1="236" x2="470" y2="226" class="traco"/>
+            <rect x="530" y="220" width="14" height="12" class="corpo"/>
+            <g id="chama" class="chama">
+              <path d="M470 196 C481 210 480 226 470 230 C460 226 459 210 470 196 Z" class="chama-fora"/>
+              <path d="M470 212 C475 219 475 227 470 229 C465 227 465 219 470 212 Z" class="chama-dentro"/>
+            </g>
+            <g id="fumaca" class="fumaca">
+              <circle cx="470" cy="214" r="4"/><circle cx="476" cy="198" r="6"/><circle cx="466" cy="180" r="8"/>
+            </g>
+            <!-- cota -->
+            <line x1="398" y1="414" x2="542" y2="414" class="cota"/>
+            <line x1="398" y1="408" x2="398" y2="420" class="cota"/>
+            <line x1="542" y1="408" x2="542" y2="420" class="cota"/>
+            <text x="560" y="428" class="tag">B-201</text>
+            <text x="560" y="450" class="nota">bolo</text>
+            <text x="470" y="432" class="nota nota-escala" text-anchor="middle">sem escala</text>
+          </g>
+        </svg>
+        <div id="bolhas" class="bolhas"></div>
+        <figcaption class="legenda">Fluxograma simplificado. Desenho fora de escala; o bolo, em escala real, seria maior.</figcaption>
+      </figure>
+    </section>
+
+    <section class="container rack" aria-labelledby="rack-titulo">
+      <div class="rack-topo">
+        <h2 id="rack-titulo">Amostras coletadas</h2>
+        <p class="rack-conta num" id="contador"></p>
+      </div>
+      <!-- Mensagens: cada item é uma bolha de metano. Para adicionar, copie um <li> e troque o número. -->
+      <ol class="amostras" id="amostras">
+        <li class="amostra">
+          <p class="amostra-tag">R-01</p>
+          <h3>Diagnóstico do reator</h3>
+          <p>Coordenar o CP2b, uma rede de pesquisa inteira, e ainda sobrar energia para todo mundo. Suspeitamos de um biodigestor particular de altíssima eficiência.</p>
+        </li>
+        <li class="amostra">
+          <p class="amostra-tag">R-02</p>
+          <h3>Ciência, coisa de menina</h3>
+          <p>Desde 2022 mostrando a muitas meninas que o laboratório, a universidade e a ciência também são lugares delas.</p>
+        </li>
+        <li class="amostra">
+          <p class="amostra-tag">R-03</p>
+          <h3>Rendimento de mentoria</h3>
+          <p>Acima de qualquer valor teórico. Nenhum revisor conseguiu contestar o resultado, e olha que tentaram.</p>
+        </li>
+        <li class="amostra">
+          <p class="amostra-tag">R-04</p>
+          <h3>Química na cozinha</h3>
+          <p>Dizem que você testa receitas de bolo como quem testa substratos. Hoje o bolo é por nossa conta, e o metano da vela também.</p>
+        </li>
+        <li class="amostra">
+          <p class="amostra-tag">R-05</p>
+          <h3>Codigestão</h3>
+          <p>Rock 'n' roll no teclado, codigestão no reator: no fim, tudo é questão de acertar a mistura. E você acerta.</p>
+        </li>
+        <li class="amostra">
+          <p class="amostra-tag">R-06</p>
+          <h3>Controle de processo</h3>
+          <p>Carga orgânica de desafios: altíssima. Estabilidade do processo: impecável. pH do bom humor: sempre na faixa ótima.</p>
+        </li>
+        <li class="amostra">
+          <p class="amostra-tag">R-07</p>
+          <h3>Tempo de retenção</h3>
+          <p>Mais um ciclo completo. Tempo de retenção recomendado para esta pesquisadora no planeta: muitos e muitos anos.</p>
+        </li>
+      </ol>
+
+      <article class="laudo" id="laudo">
+        <h3>Feliz aniversário, Renata</h3>
+        <p>Obrigado por ser uma pesquisadora incrível e uma mentora tão generosa. Que o novo ciclo venha com muita produção: de biogás, de artigos e de alegria.</p>
+        <p class="assinatura">Lucas</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container rodape">
+    <p>Feito por Lucas Nakamura Cerejo no CP2b, Unicamp, com biometano 100% renovável.</p>
+  </footer>
+
+  <dialog id="rotulo" class="rotulo" aria-labelledby="rotulo-titulo">
+    <p class="amostra-tag" id="rotulo-tag"></p>
+    <h3 id="rotulo-titulo"></h3>
+    <p id="rotulo-texto"></p>
+    <form method="dialog"><button class="btn" type="submit">Guardar no rack</button></form>
+  </dialog>
+
+  <canvas id="confete" class="confete" aria-hidden="true"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
