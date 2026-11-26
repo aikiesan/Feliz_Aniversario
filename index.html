@@ -21,13 +21,9 @@
 
   <main>
     <section class="container heroi" aria-labelledby="titulo">
-      <div class="heroi-texto">
+      <div class="heroi-cabeca">
         <h1 id="titulo">Um reator para o seu aniversário</h1>
         <p id="instrucao" class="lede">Estoure as bolhas de metano e acenda a vela do bolo.</p>
-        <div class="acoes">
-          <button id="btn-acao" class="btn" type="button">Ligar o reator</button>
-          <p id="leitura" class="leitura num" aria-live="polite"></p>
-        </div>
       </div>
 
       <figure class="planta" id="planta">
@@ -53,7 +49,7 @@
             <path d="M216 40 A13 13 0 1 1 240 40" class="escala"/>
             <line id="ponteiro" x1="228" y1="34" x2="228" y2="22" class="ponteiro"/>
             <text x="252" y="30" class="tag">PI-103</text>
-            <text x="252" y="48" class="nota">gasômetro</text>
+            <text id="t-pressao" x="252" y="48" class="valor num">0,0 mbar</text>
           </g>
 
           <!-- válvula V-102 -->
@@ -64,17 +60,50 @@
             <text x="396" y="104" class="tag" text-anchor="middle">V-102</text>
           </g>
 
+          <!-- alimentação: funil e bomba P-100 -->
+          <g>
+            <path d="M8 150 H52 L40 176 H20 Z" class="corpo"/>
+            <path id="linha-alim" d="M30 176 V312 H60" class="linha"/>
+            <path id="fluxo-alim" d="M30 176 V312 H60" class="fluxo fluxo-alim"/>
+            <g id="bomba">
+              <circle cx="30" cy="240" r="11" class="corpo"/>
+              <path d="M25 234 L37 240 L25 246 Z" class="corpo-valvula"/>
+            </g>
+            <text x="8" y="140" class="tag">P-100</text>
+            <g id="rotulos-alim"></g>
+          </g>
+
           <!-- biodigestor R-101 -->
           <g>
             <path d="M60 200 A100 62 0 0 1 260 200" class="cupula"/>
             <rect x="152" y="132" width="16" height="10" class="corpo"/>
             <rect x="60" y="200" width="200" height="200" class="corpo"/>
             <g clip-path="url(#interior)">
-              <path id="substrato" d="M60 262 q25 -8 50 0 t50 0 t50 0 t50 0 V400 H60 Z" class="substrato"/>
-              <path d="M60 262 q25 -8 50 0 t50 0 t50 0 t50 0" class="superficie"/>
+              <g id="nivel" class="nivel">
+                <path id="acidez" d="M60 262 q25 -8 50 0 t50 0 t50 0 t50 0 V440 H60 Z" class="acidez"/>
+                <path id="substrato" d="M60 262 q25 -8 50 0 t50 0 t50 0 t50 0 V440 H60 Z" class="substrato"/>
+                <path d="M60 262 q25 -8 50 0 t50 0 t50 0 t50 0" class="superficie"/>
+              </g>
+              <path id="serpentina" d="M74 386 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8 l9 -8 l9 8" class="serpentina"/>
             </g>
             <rect id="area-bolhas" x="72" y="270" width="176" height="122" class="area"/>
-            <line x1="40" y1="400" x2="600" y2="400" class="chao"/>
+            <g class="sensor">
+              <line x1="260" y1="292" x2="276" y2="292" class="traco"/>
+              <circle cx="292" cy="292" r="16" class="corpo"/>
+              <line x1="276" y1="292" x2="308" y2="292" class="traco fino"/>
+              <text x="292" y="288" class="sigla" text-anchor="middle">TI</text>
+              <text x="292" y="303" class="sigla" text-anchor="middle">104</text>
+              <text id="t-temp" x="314" y="297" class="valor num">24 °C</text>
+            </g>
+            <g class="sensor">
+              <line x1="260" y1="346" x2="276" y2="346" class="traco"/>
+              <circle cx="292" cy="346" r="16" class="corpo"/>
+              <line x1="276" y1="346" x2="308" y2="346" class="traco fino"/>
+              <text x="292" y="342" class="sigla" text-anchor="middle">AI</text>
+              <text x="292" y="357" class="sigla" text-anchor="middle">105</text>
+              <text id="t-ph" x="314" y="351" class="valor num">pH 7,2</text>
+            </g>
+            <line x1="0" y1="400" x2="600" y2="400" class="chao"/>
             <text x="60" y="428" class="tag">R-101</text>
             <text x="60" y="450" class="nota">biodigestor<tspan class="nota-longa">, codigestão de afeto e ciência</tspan></text>
           </g>
@@ -83,12 +112,25 @@
           <g>
             <rect x="398" y="340" width="144" height="60" class="corpo bolo"/>
             <rect x="420" y="292" width="100" height="48" class="corpo bolo"/>
+            <path d="M399 341 H541 V352 q-9 10 -18 0 t-18 0 t-18 0 t-18 0 t-18 0 t-18 0 t-18 0 t-18 0 Z" class="glace"/>
+            <path d="M421 293 H519 V302 q-10 9 -20 0 t-20 0 t-20 0 t-20 0 t-20 0 Z" class="glace"/>
             <path d="M398 352 q9 10 18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0" class="cobertura"/>
             <path d="M420 302 q10 9 20 0 t20 0 t20 0 t20 0 t20 0" class="cobertura"/>
+            <g class="confeitos">
+              <rect x="412" y="372" width="8" height="3" rx="1.5" transform="rotate(30 416 373)" style="fill: var(--cap-1)"/>
+              <rect x="440" y="384" width="8" height="3" rx="1.5" transform="rotate(-25 444 385)" style="fill: var(--cap-2)"/>
+              <rect x="468" y="368" width="8" height="3" rx="1.5" transform="rotate(60 472 369)" style="fill: var(--cap-3)"/>
+              <rect x="494" y="386" width="8" height="3" rx="1.5" transform="rotate(10 498 387)" style="fill: var(--cap-4)"/>
+              <rect x="520" y="370" width="8" height="3" rx="1.5" transform="rotate(-40 524 371)" style="fill: var(--cap-5)"/>
+              <rect x="438" y="320" width="8" height="3" rx="1.5" transform="rotate(-30 442 321)" style="fill: var(--cap-6)"/>
+              <rect x="470" y="326" width="8" height="3" rx="1.5" transform="rotate(20 474 327)" style="fill: var(--cap-7)"/>
+              <rect x="498" y="318" width="8" height="3" rx="1.5" transform="rotate(70 502 319)" style="fill: var(--cap-1)"/>
+            </g>
             <rect x="464" y="236" width="12" height="56" class="corpo vela"/>
+            <path d="M464 250 l12 -6 M464 264 l12 -6 M464 278 l12 -6 M464 291 l12 -6" class="vela-listra"/>
             <line x1="470" y1="236" x2="470" y2="226" class="traco"/>
             <rect x="530" y="220" width="14" height="12" class="corpo"/>
-            <g id="chama" class="chama">
+            <g id="chama" class="chama"><g id="chama-corpo">
               <path d="M470 196 C481 210 480 226 470 230 C460 226 459 210 470 196 Z" class="chama-fora"/>
               <path d="M470 212 C475 219 475 227 470 229 C465 227 465 219 470 212 Z" class="chama-dentro"/>
             </g>
@@ -107,6 +149,38 @@
         <div id="bolhas" class="bolhas"></div>
         <figcaption class="legenda">Fluxograma simplificado. Desenho fora de escala; o bolo, em escala real, seria maior.</figcaption>
       </figure>
+
+      <div class="acoes">
+        <div class="painel" id="painel" aria-label="Painel de operação do reator">
+          <div class="medida">
+            <p class="medida-nome">Temperatura</p>
+            <p class="medida-valor num"><span id="v-temp">24</span> °C</p>
+            <div class="faixa" style="--ini: 0.375; --fim: 0.5"><span class="faixa-ok"></span><span class="faixa-marca" id="m-temp"></span></div>
+            <div class="passo">
+              <button class="btn-passo" type="button" data-passo="-2" aria-label="Diminuir a temperatura">&minus;</button>
+              <span class="passo-alvo num">alvo <span id="v-alvo">24</span> °C</span>
+              <button class="btn-passo" type="button" data-passo="2" aria-label="Aumentar a temperatura">+</button>
+            </div>
+          </div>
+          <div class="medida">
+            <p class="medida-nome">Carga orgânica</p>
+            <p class="medida-valor num"><span id="v-carga">0,0</span> <span class="unidade">kg SV/m³·d</span></p>
+            <div class="faixa" style="--ini: 0.25; --fim: 0.5625"><span class="faixa-ok"></span><span class="faixa-marca" id="m-carga"></span></div>
+            <button id="btn-alimentar" class="btn-sec" type="button">Alimentar</button>
+          </div>
+          <div class="medida">
+            <p class="medida-nome">pH</p>
+            <p class="medida-valor num" id="v-ph">7,2</p>
+            <div class="faixa" style="--ini: 0.5; --fim: 0.85"><span class="faixa-ok"></span><span class="faixa-marca" id="m-ph"></span></div>
+            <p class="medida-nota">ideal entre 6,8 e 7,5</p>
+          </div>
+        </div>
+        <p class="status" id="status" aria-live="polite">Reator desligado. Ligue para começar a operação.</p>
+        <div class="linha-acao">
+          <button id="btn-acao" class="btn" type="button">Ligar o reator</button>
+          <div class="tubos" id="tubos" aria-hidden="true"></div>
+        </div>
+      </div>
     </section>
 
     <section class="container rack" aria-labelledby="rack-titulo">
@@ -116,38 +190,38 @@
       </div>
       <!-- Mensagens: cada item é uma bolha de metano. Para adicionar, copie um <li> e troque o número. -->
       <ol class="amostras" id="amostras">
-        <li class="amostra">
-          <p class="amostra-tag">R-01</p>
+        <li class="amostra" style="--cap: var(--cap-1)">
+          <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span>R-01</p>
           <h3>Diagnóstico do reator</h3>
           <p>Coordenar o CP2b, uma rede de pesquisa inteira, e ainda sobrar energia para todo mundo. Suspeitamos de um biodigestor particular de altíssima eficiência.</p>
         </li>
-        <li class="amostra">
-          <p class="amostra-tag">R-02</p>
+        <li class="amostra" style="--cap: var(--cap-2)">
+          <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span>R-02</p>
           <h3>Ciência, coisa de menina</h3>
           <p>Desde 2022 mostrando a muitas meninas que o laboratório, a universidade e a ciência também são lugares delas.</p>
         </li>
-        <li class="amostra">
-          <p class="amostra-tag">R-03</p>
+        <li class="amostra" style="--cap: var(--cap-3)">
+          <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span>R-03</p>
           <h3>Rendimento de mentoria</h3>
           <p>Acima de qualquer valor teórico. Nenhum revisor conseguiu contestar o resultado, e olha que tentaram.</p>
         </li>
-        <li class="amostra">
-          <p class="amostra-tag">R-04</p>
+        <li class="amostra" style="--cap: var(--cap-4)">
+          <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span>R-04</p>
           <h3>Química na cozinha</h3>
           <p>Dizem que você testa receitas de bolo como quem testa substratos. Hoje o bolo é por nossa conta, e o metano da vela também.</p>
         </li>
-        <li class="amostra">
-          <p class="amostra-tag">R-05</p>
+        <li class="amostra" style="--cap: var(--cap-5)">
+          <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span>R-05</p>
           <h3>Codigestão</h3>
           <p>Rock 'n' roll no teclado, codigestão no reator: no fim, tudo é questão de acertar a mistura. E você acerta.</p>
         </li>
-        <li class="amostra">
-          <p class="amostra-tag">R-06</p>
+        <li class="amostra" style="--cap: var(--cap-6)">
+          <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span>R-06</p>
           <h3>Controle de processo</h3>
           <p>Carga orgânica de desafios: altíssima. Estabilidade do processo: impecável. pH do bom humor: sempre na faixa ótima.</p>
         </li>
-        <li class="amostra">
-          <p class="amostra-tag">R-07</p>
+        <li class="amostra" style="--cap: var(--cap-7)">
+          <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span>R-07</p>
           <h3>Tempo de retenção</h3>
           <p>Mais um ciclo completo. Tempo de retenção recomendado para esta pesquisadora no planeta: muitos e muitos anos.</p>
         </li>
@@ -166,10 +240,11 @@
   </footer>
 
   <dialog id="rotulo" class="rotulo" aria-labelledby="rotulo-titulo">
-    <p class="amostra-tag" id="rotulo-tag"></p>
+    <span class="alca" aria-hidden="true"></span>
+    <p class="amostra-tag"><span class="frasco" aria-hidden="true"></span><span id="rotulo-tag"></span></p>
     <h3 id="rotulo-titulo"></h3>
     <p id="rotulo-texto"></p>
-    <form method="dialog"><button class="btn" type="submit">Guardar no rack</button></form>
+    <button id="rotulo-guardar" class="btn" type="button">Guardar no rack</button>
   </dialog>
 
   <canvas id="confete" class="confete" aria-hidden="true"></canvas>

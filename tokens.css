@@ -27,6 +27,20 @@
   --color-gas: oklch(60% 0.11 225);
   --color-gas-soft: oklch(60% 0.11 225 / 0.14);
   --color-focus: oklch(52% 0.14 245);
+  /* cores de tampa: uma por amostra, como num rack de laboratório */
+  --cap-1: oklch(72% 0.16 55);
+  --cap-2: oklch(72% 0.12 225);
+  --cap-3: oklch(70% 0.15 155);
+  --cap-4: oklch(85% 0.15 95);
+  --cap-5: oklch(56% 0.15 262);
+  --cap-6: oklch(69% 0.17 10);
+  --cap-7: oklch(68% 0.12 320);
+  --color-glace: oklch(86% 0.07 5);
+  --color-acid: oklch(84% 0.15 100);
+  --color-cold: oklch(62% 0.1 235);
+  --color-ok: oklch(80% 0.11 155);
+  --color-warn: oklch(60% 0.17 35);
+  --color-sheet-edge: oklch(29% 0.055 245 / 0.25);
   --color-scrim: oklch(29% 0.055 245 / 0.35);
 
   --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;

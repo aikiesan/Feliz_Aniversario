@@ -1,9 +1,8 @@
-/* Hallmark · shape: drawing sheet, one schematic that is the whole first screen, then the sample rack · genre: playful · theme: custom · job: celebrate (press, pop, light) · idea: "a birthday told as the anaerobic digestion she researches, drawn as an engineering flowsheet" · vibe: "lab notebook, exact, warm, a little silly"
- * paper: oklch(96.4% 0.014 135) · accent: oklch(70% 0.17 58) · display: Bricolage Grotesque 500 · body: Atkinson Hyperlegible Next · outlier: Caveat, sample labels only · hero: split, headline and one action left, the flowsheet right at 7 of 12 columns · nav: none, a dedication line and the sound toggle · footer: one credit line · imagery: none, the drawn flowsheet is the product · signature: the handwritten sample label R-01 to R-07, and the flame as the page's only warm colour
- * axes: green-tint paper/grotesque/flame orange · posture: flame accent under 2% of the viewport, warm only when lit · contrast: pass · fold: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V5 · weakest: E, the hand-drawn flowsheet is an illustration by design; kept it as line drawing in ink with real P&ID conventions (tags, valve, gauge, hatching) instead of a cartoon */
+/* Hallmark · shape: drawing sheet, a live flowsheet that is the whole first screen, its operating panel, then the sample rack · genre: playful · theme: custom · job: celebrate (operate, pop, light) · idea: "a birthday told as the anaerobic digestion she researches: heat it, feed it, keep the pH, collect the gas, light the candle" · vibe: "lab notebook, exact, warm, a little silly"
+ * paper: oklch(96.4% 0.014 135) · accent: oklch(70% 0.17 58) · display: Bricolage Grotesque 500 · body: Atkinson Hyperlegible Next · outlier: Caveat, sample labels only · hero: split, headline and operating panel left, the flowsheet right at 7 of 12 columns; on phones the flowsheet sits between headline and panel · nav: none, a dedication line and the sound toggle · footer: one credit line · imagery: none, the drawn flowsheet is the product · signature: the handwritten sample label with its coloured cap, R-01 to R-07
+ * axes: green-tint paper/grotesque/flame orange · posture: categorical cap colours, one per sample, carry identity; the flame stays the only warm accent until lit · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H4 E4 S5 R3 V5 · weakest: R, the operating panel adds words and controls; kept it to three readings and two controls, all of them real process variables */
 /* Hallmark · waive 80 · drawn illustration · the flowsheet is the joke and the signature: a cake treated as plant equipment; no photograph can carry it */
-/* Hallmark · answered copy · the headline ends on "Renata!" only after the candle is lit; it is the one sentence the page exists to say */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -16,60 +15,111 @@ body {
   background-size: var(--space-lg) var(--space-lg);
   background-position: -1px -1px;
   color: var(--color-ink);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.topo {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);
-  padding-block: var(--space-lg);
-}
+.topo { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding-block: var(--space-lg); }
 .para { color: var(--color-ink-2); font-size: var(--text-sm); }
 
 /* ---------- botões ---------- */
+.btn, .btn-sec, .btn-passo, .btn-texto {
+  touch-action: manipulation; cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 48px; padding: var(--space-sm) var(--space-lg);
+  min-height: 52px; padding: var(--space-sm) var(--space-lg);
   border: var(--rule-hair) solid var(--color-ink); border-radius: var(--radius-control);
   background: var(--color-ink); color: var(--color-paper);
-  font-weight: 600; font-size: var(--text-md); cursor: pointer;
-  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  font-weight: 600; font-size: var(--text-md);
 }
 .btn:hover { background: var(--color-ink-2); }
-.btn:active { transform: scale(0.98); }
-.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; transition: none; }
+.btn:active, .btn-sec:active, .btn-passo:active { transform: scale(0.96); }
 .btn:disabled { background: var(--color-paper-3); border-color: var(--color-rule); color: var(--color-muted); cursor: default; }
 
+.btn-sec {
+  min-height: 44px; padding: var(--space-xs) var(--space-md);
+  border: 1.5px solid var(--color-ink); border-radius: var(--radius-control);
+  background: var(--color-paper); color: var(--color-ink); font-weight: 600;
+}
+.btn-sec:hover { background: var(--color-paper-2); }
+.btn-sec:disabled, .btn-passo:disabled { background: var(--color-paper-3); border-color: var(--color-rule); color: var(--color-muted); cursor: default; }
+
+.btn-passo {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border: 1.5px solid var(--color-ink); border-radius: var(--radius-control);
+  background: var(--color-paper); color: var(--color-ink); font-size: var(--text-lg); font-weight: 600; line-height: 1;
+}
+.btn-passo:hover { background: var(--color-paper-2); }
+
 .btn-texto {
-  min-height: 44px; padding: var(--space-xs) var(--space-sm);
+  min-height: 44px; padding: var(--space-xs) var(--space-sm); white-space: nowrap;
   background: transparent; border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-control);
-  color: var(--color-ink-2); font-size: var(--text-sm); cursor: pointer; white-space: nowrap;
-  transition: background-color var(--dur-micro) var(--ease-out);
+  color: var(--color-ink-2); font-size: var(--text-sm);
 }
 .btn-texto:hover { background: var(--color-paper-2); }
 .btn-texto:active { background: var(--color-paper-3); }
-.btn-texto:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; transition: none; }
 
-/* sem JavaScript: só o conteúdo, sem controles que não funcionam */
-html:not(.js) #btn-acao, html:not(.js) #btn-som { display: none; }
+.btn:focus-visible, .btn-sec:focus-visible, .btn-passo:focus-visible, .btn-texto:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; transition: none; }
+
+html:not(.js) .acoes { display: none; }
 
 /* ---------- herói ---------- */
 .heroi {
-  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns);
-  align-items: center;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-lg);
+  grid-template-rows: auto auto; align-content: center; align-items: start;
   min-height: calc(100dvh - 92px);
-  padding-block: var(--space-lg) var(--space-2xl);
+  padding-block: var(--space-md) var(--space-2xl);
 }
-.heroi-texto { grid-column: 1 / span 5; display: grid; gap: var(--space-lg); align-content: center; }
-h1 {
-  font-size: var(--text-display); font-weight: 500; line-height: 1.02;
-  letter-spacing: var(--tracking-display); max-width: 11ch;
-}
-.lede { font-size: var(--text-lead); color: var(--color-ink-2); max-width: 30ch; line-height: 1.45; }
-.acoes { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); }
-.leitura { color: var(--color-muted); font-size: var(--text-sm); min-height: 1lh; }
+.heroi-cabeca { grid-column: 1 / span 5; grid-row: 1; display: grid; gap: var(--space-md); align-self: end; }
+.acoes { grid-column: 1 / span 5; grid-row: 2; display: grid; gap: var(--space-md); }
+.planta { grid-column: 6 / span 7; grid-row: 1 / span 2; align-self: center; margin: 0; position: relative; }
 
-.planta { grid-column: 6 / span 7; margin: 0; position: relative; }
+h1 { font-size: var(--text-display-s); font-weight: 500; line-height: 1.02; letter-spacing: var(--tracking-display); max-width: 12ch; }
+h1 .palavra { display: inline-block; }
+.lede { font-size: var(--text-lead); color: var(--color-ink-2); max-width: 32ch; line-height: 1.45; }
+
 #cena { width: 100%; height: auto; overflow: visible; }
 .legenda { color: var(--color-muted); font-size: var(--text-xs); margin-top: var(--space-xs); }
+
+/* ---------- painel de operação ---------- */
+.painel {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-sm);
+  padding: var(--space-md); background: var(--color-paper);
+  border: 1.5px solid var(--color-ink); border-radius: var(--radius-card);
+}
+.medida { display: grid; gap: var(--space-2xs); align-content: start; min-width: 0; }
+.medida-nome { font-size: var(--text-xs); color: var(--color-muted); }
+.medida-valor { font-family: var(--font-display); font-size: var(--text-xl); line-height: 1.1; white-space: nowrap; }
+.unidade { font-family: var(--font-body); font-size: var(--text-xs); color: var(--color-muted); white-space: normal; }
+.medida-nota { font-size: var(--text-xs); color: var(--color-muted); }
+.faixa { position: relative; height: 8px; border-radius: 4px; background: var(--color-paper-3); margin-block: var(--space-2xs) var(--space-xs); }
+.faixa-ok {
+  position: absolute; inset-block: 0; left: 0; right: 0; border-radius: inherit; background: var(--color-ok);
+  clip-path: inset(0 calc((1 - var(--fim)) * 100%) 0 calc(var(--ini) * 100%) round 4px);
+}
+.faixa-marca {
+  position: absolute; top: -4px; left: 0; width: 4px; height: 16px; margin-left: calc(-1 * var(--space-3xs));
+  border-radius: 2px; background: var(--color-ink);
+  transform: translateX(var(--pos, 0px));
+  transition: transform var(--dur-long) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+}
+.medida.alerta .medida-valor { color: var(--color-warn); }
+.passo { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2xs); }
+.passo-alvo { font-size: var(--text-xs); color: var(--color-muted); text-align: center; white-space: nowrap; }
+#btn-alimentar { width: 100%; }
+
+.status { font-size: var(--text-sm); color: var(--color-ink-2); min-height: 2lh; line-height: 1.45; }
+.status strong { color: var(--color-ink); font-weight: 600; }
+.linha-acao { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); }
+
+/* tubos de ensaio: o progresso da coleta */
+.tubos { display: flex; gap: var(--space-xs); align-items: end; }
+.tubo { position: relative; width: 14px; height: 36px; padding-top: var(--space-xs); }
+.tampa { position: absolute; top: 0; left: -2px; right: -2px; height: 8px; border-radius: 2px; background: var(--cap); }
+.vidro { position: relative; display: block; height: 28px; border: 1.5px solid var(--color-ink); border-top: 0; border-radius: 0 0 7px 7px; overflow: hidden; background: var(--color-paper); }
+.liquido { position: absolute; inset: 0; background: var(--cap); transform-origin: bottom; transform: scaleY(0); transition: transform 600ms var(--ease-out); }
+.tubo.cheio .liquido { transform: scaleY(0.85); }
 
 /* ---------- desenho técnico ---------- */
 .linha, .traco, .corpo, .cupula, .escala, .cota, .chao, .superficie, .cobertura, .seta {
@@ -78,61 +128,78 @@ h1 {
 .corpo { fill: var(--color-paper); }
 .bolo { fill: var(--color-paper-2); }
 .vela { fill: var(--color-paper); }
+.vela-listra { stroke: var(--cap-6); stroke-width: 3; }
+.glace { fill: var(--color-glace); }
 .cupula { fill: var(--color-paper-2); }
 .cobertura { stroke-width: 1.5; }
 .cota, .chao { stroke-width: 1; stroke: var(--color-ink-2); }
 .escala { stroke-width: 1.5; stroke: var(--color-muted); }
 .seta { stroke-width: 1.5; }
+.traco.fino { stroke-width: 1; }
 .hachura-linha { stroke: var(--color-ink); stroke-width: 1; opacity: 0.45; }
 .substrato { fill: url(#hachura); }
+.acidez { fill: var(--color-acid); opacity: var(--acidez, 0); transition: opacity var(--dur-long) var(--ease-out); }
+.nivel { transform: translateY(var(--nivel, 0px)); transition: transform 900ms var(--ease-out); }
+.serpentina { fill: none; stroke: var(--cor-aquec, var(--color-cold)); stroke-width: 2.5; stroke-linejoin: round; transition: stroke 600ms var(--ease-out); }
 .area { fill: none; stroke: none; }
 .tag { fill: var(--color-ink); font: 600 13px var(--font-body); }
+.sigla { fill: var(--color-ink); font: 600 10px var(--font-body); }
+.valor { fill: var(--color-ink); font: 600 13px var(--font-body); }
 .nota { fill: var(--color-muted); font: 400 12px var(--font-body); }
+.rotulo-alim { fill: var(--color-accent-deep); font: 500 17px var(--font-outlier); }
 
 .fluxo {
   fill: none; stroke: var(--color-gas); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round;
   stroke-dasharray: 8 12; opacity: 0;
   transition: opacity var(--dur-long) var(--ease-out);
 }
+.fluxo-alim { stroke: var(--cap-1); }
 .fluxo.ligado { opacity: 1; animation: escoar 0.7s linear infinite; }
 
 .corpo-valvula { fill: var(--color-ink); stroke: var(--color-ink); stroke-width: 2; stroke-linejoin: round; transition: fill var(--dur-short) var(--ease-out); }
 .valvula.aberta .corpo-valvula { fill: var(--color-paper); }
+#bomba { transform-box: fill-box; transform-origin: center; }
 
 .ponteiro {
   stroke: var(--color-accent-deep); stroke-width: 2; stroke-linecap: round;
   transform-box: view-box; transform-origin: 228px 34px;
   transform: rotate(-60deg);
-  transition: transform var(--dur-long) var(--ease-out);
+  transition: transform 900ms var(--ease-out);
 }
 
-.chama { transform-box: view-box; transform-origin: 470px 230px; transition: opacity var(--dur-short) var(--ease-out), transform var(--dur-long) var(--ease-out); }
-.js .chama:not(.acesa) { opacity: 0; transform: scale(0.4); }
-.chama-fora { animation: tremular 0.22s ease-in-out infinite alternate; transform-box: view-box; transform-origin: 470px 230px; }
-.chama-fora { fill: var(--color-accent); stroke: var(--color-accent-deep); stroke-width: 1; }
-.chama-dentro { fill: var(--color-flame-core); }
+.chama { transform-box: view-box; transform-origin: 470px 230px; transition: opacity var(--dur-short) var(--ease-out); }
+.js .chama:not(.acesa) { opacity: 0; }
+#chama-corpo { transform-box: view-box; transform-origin: 470px 230px; }
+.chama-fora { animation: tremular 0.22s ease-in-out infinite alternate; transform-box: view-box; transform-origin: 470px 230px; fill: var(--color-accent); stroke: var(--color-accent-deep); stroke-width: 1; }
+.chama-dentro { fill: var(--color-gas); }
+.chama.acesa { cursor: pointer; }
 
 .fumaca circle { fill: none; stroke: var(--color-muted); stroke-width: 1.5; opacity: 0; }
 .fumaca.ativa circle { animation: fumaca 1.6s var(--ease-out) forwards; }
 .fumaca.ativa circle:nth-child(2) { animation-delay: 0.15s; }
 .fumaca.ativa circle:nth-child(3) { animation-delay: 0.3s; }
 
-/* ---------- bolhas ---------- */
+/* ---------- bolhas (movidas por script, só transform e opacity) ---------- */
 .bolhas { position: absolute; inset: 0; pointer-events: none; }
 .bolha {
-  position: absolute; pointer-events: auto; cursor: pointer;
+  position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; touch-action: manipulation;
   display: grid; place-items: center; padding: 0;
-  border: 2px solid var(--color-ink); border-radius: var(--radius-pill);
-  background: var(--color-paper);
+  border: 2px solid var(--color-ink); border-radius: 50%;
+  background: color-mix(in oklab, var(--cap) 45%, var(--color-paper));
   color: var(--color-ink); font: 600 var(--text-sm) var(--font-body);
-  animation: subir var(--dur, 9s) linear forwards;
-  transition: background-color var(--dur-micro) var(--ease-out);
+  will-change: transform, opacity;
+  user-select: none; -webkit-user-select: none;
 }
-.bolha:hover { background: var(--color-gas-soft); }
-.bolha:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; transition: none; }
-.bolha.deco { pointer-events: none; border-width: 1.5px; background: transparent; animation-name: subir-curto; }
-.bolha.estourou { animation: estourar var(--dur-short) var(--ease-out) forwards; pointer-events: none; }
-.bolha.parada { animation: none; }
+.bolha::before { content: ""; position: absolute; inset: -12px; border-radius: inherit; }
+.bolha::after { content: ""; position: absolute; top: 18%; left: 22%; width: 22%; height: 22%; border-radius: inherit; background: var(--color-paper); opacity: 0.85; }
+.bolha:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.bolha.deco { pointer-events: none; border-width: 1.5px; background: transparent; }
+.bolha.deco::after, .bolha.deco::before { display: none; }
+
+.estouro { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
+.estouro .anel { position: absolute; left: -24px; top: -24px; width: 48px; height: 48px; border-radius: 50%; border: 3px solid var(--cap); }
+.estouro .gota { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--cap); }
+.estouro .etiqueta-voo { position: absolute; left: 0; top: 0; translate: -50% -50%; font: 500 var(--text-xl) var(--font-outlier); color: var(--color-ink); white-space: nowrap; }
 
 /* ---------- rack de amostras ---------- */
 .rack { padding-block: var(--space-2xl) var(--section-gap-s); border-top: var(--rule-hair) solid var(--color-rule); }
@@ -140,83 +207,83 @@ h1 {
 h2 { font-size: var(--text-section); font-weight: 500; letter-spacing: var(--tracking-display); line-height: 1.1; }
 .rack-conta { color: var(--color-muted); }
 
-.amostras {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: var(--space-md);
-}
+.amostras { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: var(--space-md); }
 .amostra, .laudo, .rotulo {
-  position: relative;
-  background: var(--color-paper);
+  position: relative; background: var(--color-paper);
   border: var(--rule-hair) solid var(--color-ink); border-radius: var(--radius-card);
-  padding: var(--space-lg);
-  display: grid; gap: var(--space-xs); align-content: start;
+  padding: var(--space-lg); display: grid; gap: var(--space-xs); align-content: start;
 }
+.amostra { background: color-mix(in oklab, var(--cap) 14%, var(--color-paper)); }
 .amostra h3, .laudo h3, .rotulo h3 { font-size: var(--text-title); font-weight: 500; line-height: 1.2; }
 .amostra p:not(.amostra-tag), .rotulo p:not(.amostra-tag) { color: var(--color-ink-2); }
-.amostra-tag {
-  font-family: var(--font-outlier); font-size: var(--text-xl); line-height: 1;
-  color: var(--color-accent-deep);
-}
+.amostra-tag { display: flex; align-items: center; gap: var(--space-xs); font-family: var(--font-outlier); font-size: var(--text-xl); line-height: 1; color: var(--color-ink); }
+.frasco { position: relative; display: inline-block; width: 12px; height: 22px; border: 1.5px solid var(--color-ink); border-top: 0; border-radius: 0 0 6px 6px; background: linear-gradient(to top, var(--cap) 70%, transparent 70%); }
+.frasco::before { content: ""; position: absolute; top: -5px; left: -3px; right: -3px; height: 5px; border-radius: 2px; background: var(--cap); }
 
-/* com JavaScript, as amostras aparecem conforme são coletadas */
 .js .amostra:not(.coletada) { border-style: dashed; border-color: var(--color-rule); background: transparent; }
 .js .amostra:not(.coletada) > :not(.amostra-tag) { visibility: hidden; }
 .js .amostra:not(.coletada) .amostra-tag { color: var(--color-muted); }
-.amostra.coletada { animation: chegar var(--dur-long) var(--ease-out); }
+.js .amostra:not(.coletada) .frasco { background: transparent; border-color: var(--color-muted); }
 
 .laudo { margin-top: var(--space-xl); max-width: 640px; border-width: 2px; box-shadow: var(--shadow-card); }
 .laudo h3 { font-size: var(--text-2xl); }
-.laudo p:not(.amostra-tag):not(.assinatura) { font-size: var(--text-lead); color: var(--color-ink-2); }
+.laudo p:not(.assinatura) { font-size: var(--text-lead); color: var(--color-ink-2); }
 .assinatura { font-family: var(--font-outlier); font-size: var(--text-2xl); color: var(--color-ink); justify-self: end; }
 .js .laudo:not(.revelado) { display: none; }
-.laudo.revelado { animation: chegar var(--dur-long) var(--ease-out); }
 
-/* ---------- rótulo (diálogo) ---------- */
+/* ---------- rótulo: cartão no computador, gaveta no celular ---------- */
 .rotulo:not([open]) { display: none; }
-.rotulo { width: min(440px, calc(100% - var(--space-xl))); color: var(--color-ink); border-width: 2px; box-shadow: var(--shadow-card); gap: var(--space-sm); }
-.rotulo[open] { animation: chegar var(--dur-short) var(--ease-out); }
+.rotulo {
+  width: min(440px, calc(100% - var(--space-xl))); max-height: calc(100dvh - var(--space-xl));
+  color: var(--color-ink); border-width: 2px; box-shadow: var(--shadow-card); gap: var(--space-sm);
+  background: color-mix(in oklab, var(--cap, var(--color-paper)) 12%, var(--color-paper));
+  overscroll-behavior: contain;
+}
 .rotulo::backdrop { background: var(--color-scrim); }
-.rotulo form { margin-top: var(--space-xs); }
-.rotulo .btn { width: 100%; }
+.rotulo .btn { width: 100%; margin-top: var(--space-xs); }
+.rotulo .amostra-tag { font-size: var(--text-2xl); }
+.alca { display: none; }
 
 .rodape { padding-block: var(--space-xl); border-top: var(--rule-hair) solid var(--color-rule); color: var(--color-muted); font-size: var(--text-sm); }
-
 .confete { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: var(--z-toast); }
 
 /* ---------- responsivo ---------- */
 @media (max-width: 60rem) {
-  .heroi { min-height: 0; row-gap: var(--space-xl); padding-block: var(--space-md) var(--space-xl); }
-  .heroi-texto, .planta { grid-column: 1 / -1; }
-  h1 { max-width: 14ch; }
+  .heroi { min-height: 0; padding-block: var(--space-xs) var(--space-xl); row-gap: var(--space-md); }
+  .heroi-cabeca, .acoes, .planta { grid-column: 1 / -1; grid-row: auto; }
+  h1 { max-width: 16ch; }
 }
 @media (max-width: 40rem) {
+  .topo { padding-block: var(--space-md); }
+  .para { font-size: var(--text-xs); }
+  h1 { font-size: clamp(2rem, 9vw, 2.5rem); }
+  .lede { font-size: var(--text-md); }
   .tag { font-size: 20px; }
+  .valor { font-size: 19px; }
+  .sigla { font-size: 11px; }
   .nota { font-size: 17px; }
-  .nota-longa, .nota-escala { display: none; }
+  .nota-longa, .nota-escala, .legenda { display: none; }
+  .painel { padding: var(--space-sm); gap: var(--space-sm); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .medida:last-child { grid-column: 1 / -1; }
+  .medida-valor { font-size: var(--text-lg); }
+  .passo-alvo { font-size: 0.75rem; }
+  .btn-passo { width: 36px; height: 40px; }
+  .linha-acao .btn { flex: 1 1 100%; }
+  .tubos { flex: 1 1 100%; justify-content: center; }
+  .rotulo {
+    position: fixed; inset: auto 0 0 0; margin: 0; width: 100%; max-width: none; max-height: 85dvh; overflow-y: auto;
+    border-radius: 16px 16px 0 0; border-bottom: 0;
+    padding: var(--space-md) var(--space-lg) calc(var(--space-lg) + env(safe-area-inset-bottom));
+  }
+  .alca { display: block; justify-self: center; width: 40px; height: 4px; border-radius: var(--radius-pill); background: var(--color-rule); margin-bottom: var(--space-xs); }
 }
 
 /* ---------- movimento ---------- */
-@keyframes subir {
-  0% { transform: translate(0, 0); opacity: 0; }
-  6% { opacity: 1; }
-  25% { transform: translate(6px, calc(var(--sobe) * 0.25)); }
-  50% { transform: translate(-6px, calc(var(--sobe) * 0.5)); }
-  75% { transform: translate(5px, calc(var(--sobe) * 0.75)); }
-  92% { opacity: 1; }
-  100% { transform: translate(0, var(--sobe)); opacity: 0; }
-}
-@keyframes subir-curto {
-  0% { transform: translate(0, 0); opacity: 0; }
-  15% { opacity: 0.8; }
-  100% { transform: translate(0, var(--sobe)); opacity: 0; }
-}
-@keyframes estourar { to { transform: scale(1.5); opacity: 0; } }
 @keyframes escoar { to { stroke-dashoffset: -20; } }
 @keyframes tremular { from { transform: scale(1, 1); } to { transform: scale(0.94, 1.05); } }
 @keyframes fumaca { 0% { opacity: 0.8; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-36px); } }
-@keyframes chegar { from { opacity: 0; transform: translateY(8px); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .bolha, .bolha.deco, .fluxo.ligado, .chama-fora { animation: none; }
+  .fluxo.ligado, .chama-fora { animation: none; }
   .fluxo.ligado { stroke-dasharray: none; }
 }
